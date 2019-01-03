@@ -1,0 +1,6 @@
+# Cluster provisioning requirements
+ansible>=2.5.0,!=2.7.0
+jinja2>=2.9.6
+netaddr==0.7.19
+pbr>=1.6
+passlib==1.7.1
