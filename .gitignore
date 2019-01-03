@@ -1,0 +1,22 @@
+# Eclipse project files
+/.project
+/.pydevproject
+/.buildpath
+/.settings
+
+# VSCode files
+/.vscode
+
+# Python files
+__pycache__
+
+# Ansible files
+*.retry
+/hosts/inventory.dev.yml
+/hosts/hosts.ini
+
+# Kubernetes files
+/hosts/credentials/
+
+# Extra files
+*.log
