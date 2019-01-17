@@ -1,4 +1,0 @@
-- provider: ansible
-  config: ansible.cfg
-  requirements:
-    - kubespray/requirements.txt

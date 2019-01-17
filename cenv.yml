@@ -1,0 +1,7 @@
+info: 
+    provider: ansible
+    config: ansible.cfg
+    requirements:
+        - kubespray/requirements.txt
+    playbooks:
+        - playbooks/vars.yml
