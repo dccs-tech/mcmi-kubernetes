@@ -5,3 +5,16 @@ info:
         - kubespray/requirements.txt
     playbooks:
         - playbooks/vars.yml
+
+init:
+    provider: script
+    script: scripts/init-server.sh
+    default_args:
+        - /dev/sda3 # Backup device
+
+restore:
+    provider: script
+    script: scripts/restore-server.sh
+    default_args:
+        - /dev/sda3 # Backup device
+        - /dev/sda2 # Target device
