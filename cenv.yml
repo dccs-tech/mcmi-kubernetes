@@ -6,6 +6,12 @@ info:
     playbooks:
         - playbooks/vars.yml
 
+test:
+    provider: script
+    script: scripts/test.sh
+    default_args:
+        - altered
+
 init:
     provider: script
     script: scripts/init-server.sh
