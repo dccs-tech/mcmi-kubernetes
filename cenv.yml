@@ -6,21 +6,6 @@ info:
     playbooks:
         - playbooks/vars.yml
 
-test:
-    provider: script
-    script: scripts/test.sh
-    sudo: True
-    args:
-        - altered
-
-list-root:
-    provider: command
-    command: ls
-    sudo: True
-    args:
-        - '-al'
-        - /root
-
 init:
     provider: script
     script: scripts/init-server.sh
