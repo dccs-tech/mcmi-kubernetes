@@ -13,6 +13,14 @@ test:
     args:
         - altered
 
+list-root:
+    provider: command
+    command: ls
+    sudo: True
+    args:
+        - '-al'
+        - /root
+
 init:
     provider: script
     script: scripts/init-server.sh
