@@ -9,18 +9,21 @@ info:
 test:
     provider: script
     script: scripts/test.sh
+    sudo: True
     args:
         - altered
 
 init:
     provider: script
     script: scripts/init-server.sh
+    sudo: True
     args:
         - /dev/sda3 # Backup device
 
 restore:
     provider: script
     script: scripts/restore-server.sh
+    sudo: True
     args:
         - /dev/sda3 # Backup device
         - /dev/sda2 # Target device
