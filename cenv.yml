@@ -3,6 +3,7 @@ info:
     roles:
         - server-admin
     config: ansible.cfg
+    group_vars: group_vars
     requirements:
         - kubespray/requirements.txt
     playbooks:
