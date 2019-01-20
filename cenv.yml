@@ -1,5 +1,7 @@
 info: 
     provider: ansible
+    roles:
+        - server-admin
     config: ansible.cfg
     requirements:
         - kubespray/requirements.txt
@@ -9,6 +11,8 @@ info:
 init:
     provider: script
     script: scripts/init-server.sh
+    roles:
+        - server-admin
     sudo: True
     args:
         - /dev/sda3 # Backup device
@@ -16,6 +20,8 @@ init:
 restore:
     provider: script
     script: scripts/restore-server.sh
+    roles:
+        - server-admin
     sudo: True
     args:
         - /dev/sda3 # Backup device
