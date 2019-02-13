@@ -1,29 +1,33 @@
-info: 
-    provider: ansible
-    roles:
-        - server-admin
-    config: ansible.cfg
-    group_vars: group_vars
-    requirements:
-        - kubespray/requirements.txt
-    playbooks:
-        - playbooks/vars.yml
+profiles:
+    - profiles
 
-init:
-    provider: script
-    script: scripts/init-server.sh
-    roles:
-        - server-admin
-    sudo: True
-    args:
-        - /dev/sda3 # Backup device
+tasks:
+    info: 
+        provider: ansible
+        roles:
+            - server-admin
+        config: ansible.cfg
+        group_vars: group_vars
+        requirements:
+            - kubespray/requirements.txt
+        playbooks:
+            - playbooks/vars.yml
 
-restore:
-    provider: script
-    script: scripts/restore-server.sh
-    roles:
-        - server-admin
-    sudo: True
-    args:
-        - /dev/sda3 # Backup device
-        - /dev/sda2 # Target device
+    init:
+        provider: script
+        script: scripts/init-server.sh
+        roles:
+            - server-admin
+        sudo: True
+        args:
+            - /dev/sda3 # Backup device
+
+    restore:
+        provider: script
+        script: scripts/restore-server.sh
+        roles:
+            - server-admin
+        sudo: True
+        args:
+            - /dev/sda3 # Backup device
+            - /dev/sda2 # Target device
