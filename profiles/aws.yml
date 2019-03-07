@@ -5,9 +5,15 @@ parents:
 config:
   master_subnet_cidr_prefix: 28
   master_subnet_public_ip: False
+  master_groups:
+    - k8s-cluster
+    - kube-master
 
   node_subnet_cidr_prefix: 20
   node_subnet_public_ip: False
+  node_groups:
+    - k8s-cluster
+    - kube-node
 
 subnet:
   master-1:
@@ -15,21 +21,25 @@ subnet:
     cidr_prefix: "@master_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@master_subnet_public_ip"
+    group_names: "@master_groups"
 
   master-2:
     network: "@aws_networks"
     cidr_prefix: "@master_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@master_subnet_public_ip"
+    group_names: "@master_groups"
 
   node-1:
     network: "@aws_networks"
     cidr_prefix: "@node_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@node_subnet_public_ip"
+    group_names: "@node_groups"
 
   node-2:
     network: "@aws_networks"
     cidr_prefix: "@node_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@node_subnet_public_ip"
+    group_names: "@node_groups"
