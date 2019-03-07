@@ -14,22 +14,22 @@ subnet:
     network: "@aws_networks"
     cidr_prefix: "@master_subnet_cidr_prefix"
     zone_suffix: a
-    public_ip: "@master_subnet_public_ip"
+    use_public_ip: "@master_subnet_public_ip"
 
   master-2:
     network: "@aws_networks"
     cidr_prefix: "@master_subnet_cidr_prefix"
     zone_suffix: b
-    public_ip: "@master_subnet_public_ip"
-  
+    use_public_ip: "@master_subnet_public_ip"
+
   node-1:
     network: "@aws_networks"
     cidr_prefix: "@node_subnet_cidr_prefix"
     zone_suffix: a
-    public_ip: "@node_subnet_public_ip"
+    use_public_ip: "@node_subnet_public_ip"
 
   node-2:
     network: "@aws_networks"
     cidr_prefix: "@node_subnet_cidr_prefix"
     zone_suffix: b
-    public_ip: "@node_subnet_public_ip"
+    use_public_ip: "@node_subnet_public_ip"
