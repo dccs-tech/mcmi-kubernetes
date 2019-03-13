@@ -1,33 +1,8 @@
-profiles:
-    - profiles
-
-tasks:
-    info: 
-        provider: ansible
-        roles:
-            - server-admin
-        config: ansible.cfg
-        group_vars: group_vars
-        requirements:
-            - kubespray/requirements.txt
-        playbooks:
-            - playbooks/vars.yml
-
-    init:
-        provider: script
-        script: scripts/init-server.sh
-        roles:
-            - server-admin
-        sudo: True
-        args:
-            - /dev/sda3 # Backup device
-
-    restore:
-        provider: script
-        script: scripts/restore-server.sh
-        roles:
-            - server-admin
-        sudo: True
-        args:
-            - /dev/sda3 # Backup device
-            - /dev/sda2 # Target device
+requirements: kubespray/requirements.txt
+profiles: profiles
+tasks: tasks
+projects:
+  cluster:
+    provider: git
+    remote: https://github.com/venturiscm/cenv-cluster.git
+    reference: master
