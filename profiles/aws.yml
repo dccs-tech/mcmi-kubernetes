@@ -15,6 +15,13 @@ config:
     - k8s-cluster
     - kube-node
 
+group:
+  kube-master:
+  kube-node:
+  k8s-cluster:
+    - kube-master
+    - kube-node
+
 subnet:
   master-1:
     network: "@aws_networks"
