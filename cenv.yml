@@ -1,4 +1,7 @@
-requirements: kubespray/requirements.txt
+scripts: scripts/install.sh
+requirements:
+  - kubespray/requirements.txt
+  - requirements.txt
 profiles: profiles
 tasks: tasks
 lib: false
