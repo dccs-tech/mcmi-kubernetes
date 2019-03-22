@@ -1,3 +1,6 @@
+env:
+  HELM_TLS_VERIFY: false
+  HELM_TLS_ENABLE: true
 scripts: scripts/install.sh
 requirements:
   - kubespray/requirements.txt
