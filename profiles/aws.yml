@@ -63,28 +63,28 @@ subnet:
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_master_subnet_public_ip"
-    group_names: "@kube_master_groups"
+    groups: "@kube_master_groups"
 
   kube-master-2:
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_master_subnet_public_ip"
-    group_names: "@kube_master_groups"
+    groups: "@kube_master_groups"
 
   kube-node-1:
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_node_subnet_public_ip"
-    group_names: "@kube_node_groups"
+    groups: "@kube_node_groups"
 
   kube-node-2:
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_node_subnet_public_ip"
-    group_names: "@kube_node_groups"
+    groups: "@kube_node_groups"
 
 server:
   kube-master:
@@ -92,7 +92,6 @@ server:
     provider: ec2
     network: "@aws_networks"
     subnet: "@aws_kube_master_subnets"
-    firewalls: "@aws_kube_master_firewalls"
     image: "@aws_ubuntu_image[network]"
     user: "@aws_ubuntu_user"
     machine: "@aws_kube_master_machine"
@@ -104,14 +103,14 @@ server:
     ebs_iops: "@aws_kube_master_ebs_iops"
     ebs_optimized: "@aws_kube_master_ebs_optimized"
     ebs_encrypted: "@aws_kube_master_ebs_encrypted"
-    group_names: "@kube_master_groups"
+    firewalls: "@aws_kube_master_firewalls"
+    groups: "@kube_master_groups"
 
   kube-node:
     count: 3
     provider: ec2
     network: "@aws_networks"
     subnet: "@aws_kube_node_subnets"
-    firewalls: "@aws_kube_node_firewalls"
     image: "@aws_ubuntu_image[network]"
     user: "@aws_ubuntu_user"
     machine: "@aws_kube_node_machine"
@@ -123,4 +122,5 @@ server:
     ebs_iops: "@aws_kube_node_ebs_iops"
     ebs_optimized: "@aws_kube_node_ebs_optimized"
     ebs_encrypted: "@aws_kube_node_ebs_encrypted"
-    group_names: "@kube_node_groups"
+    firewalls: "@aws_kube_node_firewalls"
+    groups: "@kube_node_groups"
