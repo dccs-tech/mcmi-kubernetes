@@ -1,11 +1,9 @@
 parents:
   - module: cluster
-    profile: aws-domain
-
-  - module: cluster
     profile: aws-network
 
   - aws-groups
+  - aws-domain
 
 config:
   kubelet_port: 10250
