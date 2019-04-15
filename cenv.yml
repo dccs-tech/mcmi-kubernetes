@@ -5,7 +5,9 @@ scripts: scripts/install.sh
 requirements:
   - kubespray/requirements.txt
   - requirements.txt
-profiles: profiles
+profiles:
+  - profiles/aws
+  - profiles/aws/phase
 tasks: tasks
 lib: false
 modules:
