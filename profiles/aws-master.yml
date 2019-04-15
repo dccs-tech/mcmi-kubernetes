@@ -7,8 +7,6 @@ parents:
 config:
   kube_master_subnet_cidr_prefix: 28
   kube_master_subnet_public_ip: true
-  kube_master_groups:
-    - kube-master
 
   aws_kube_master_subnets:
     - kube_master_1
@@ -41,23 +39,25 @@ group:
 
 subnet:
   kube_master_1:
+    when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_master_subnet_public_ip"
-    groups: "@kube_master_groups"
+    groups: kube-master
 
   kube_master_2:
+    when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_master_subnet_public_ip"
-    groups: "@kube_master_groups"
+    groups: kube-master
 
 firewall:
   kube_master_external:
     network: "@aws_networks"
-    groups: "@kube_master_groups"
+    groups: kube-master
     rules:
       api_in:
         mode: ingress
@@ -68,7 +68,7 @@ firewall:
   kube_master_internal:
     requires: kube_master_external
     network: "@aws_networks"
-    groups: "@kube_master_groups"
+    groups: kube-master
     rules:
       api_in:
         mode: ingress
@@ -96,10 +96,10 @@ load_balancer:
     domain: "@root_domain"
     internal: false
     idle_timeout: "@aws_load_balancer_timeout"
+    groups: kube-master
     firewalls:
       - internet
       - kube_master_external
-    groups: "@kube_master_groups"
     listeners:
       https:
         port: "@kube_master_api_port"
@@ -131,6 +131,9 @@ server:
     ebs_iops: "@aws_kube_master_ebs_iops"
     ebs_optimized: "@aws_kube_master_ebs_optimized"
     ebs_encrypted: "@aws_kube_master_ebs_encrypted"
+    load_balancer: kube
+    load_balancer_listener: https
+    groups: kube-master
     firewalls:
       - internet
       - ssh_external
@@ -139,6 +142,3 @@ server:
       - kube_master_internal
       - kube_node_internal
       - weave_internal
-    load_balancer: kube
-    load_balancer_listener: https
-    groups: "@kube_master_groups"
