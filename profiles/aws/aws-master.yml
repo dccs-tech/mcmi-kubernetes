@@ -1,7 +1,4 @@
 parents:
-  - module: cluster
-    profile: aws-network
-
   - aws-node
 
 config:
@@ -32,10 +29,6 @@ config:
   aws_load_balancer_health_timeout: 10
   aws_load_balancer_healthy_threshold: 3
   aws_load_balancer_unhealthy_threshold: 3
-
-group:
-  etcd:
-  kube-master:
 
 subnet:
   kube_master_1:
@@ -144,3 +137,8 @@ server:
       - kube_master_internal
       - kube_node_internal
       - weave_internal
+
+provision:
+  rotate-master-credentials:
+    command: server rotate
+    server_search: groups.name=kube-master

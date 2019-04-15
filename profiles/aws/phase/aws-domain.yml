@@ -1,0 +1,8 @@
+parents:
+  - aws-groups
+
+domain:
+  "@root_domain":
+    provider: route53
+    email: "@root_domain_email"
+    groups: k8s-cluster

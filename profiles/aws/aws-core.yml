@@ -5,8 +5,7 @@ parents:
   - module: cluster
     profile: aws-network
 
-  - aws-node
-  - aws-master
+  - aws-groups
 
 config:
   kubelet_port: 10250
@@ -17,11 +16,6 @@ config:
 
   weave_port_low: 6783
   weave_port_high: 6784
-
-group:
-  k8s-cluster:
-    - kube-master
-    - kube-node
 
 domain:
   "@root_domain":
@@ -54,7 +48,9 @@ firewall:
 
   etcd_internal:
     network: "@aws_networks"
-    groups: k8s-cluster
+    groups:
+      - etcd
+      - k8s-cluster
     rules:
       tcp_in:
         mode: ingress
@@ -65,7 +61,9 @@ firewall:
 
   weave_internal:
     network: "@aws_networks"
-    groups: k8s-cluster
+    groups:
+      - weave
+      - k8s-cluster
     rules:
       tcp_in:
         mode: ingress

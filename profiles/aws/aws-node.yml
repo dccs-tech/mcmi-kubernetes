@@ -1,6 +1,5 @@
 parents:
-  - module: cluster
-    profile: aws-network
+  - aws-core
 
 config:
   kube_node_subnet_cidr_prefix: 20
@@ -21,9 +20,6 @@ config:
 
   kube_node_nodeport_port_low: 30000
   kube_node_nodeport_port_high: 32767
-
-group:
-  kube-node:
 
 subnet:
   kube_node_1:
@@ -79,3 +75,8 @@ server:
       - kubelet_internal
       - kube_node_internal
       - weave_internal
+
+provision:
+  rotate-node-credentials:
+    command: server rotate
+    server_search: groups.name=kube-node
