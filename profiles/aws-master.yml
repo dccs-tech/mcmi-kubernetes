@@ -133,7 +133,9 @@ server:
     ebs_encrypted: "@aws_kube_master_ebs_encrypted"
     load_balancer: kube
     load_balancer_listener: https
-    groups: kube-master
+    groups:
+      - etcd
+      - kube-master
     firewalls:
       - internet
       - ssh_external
