@@ -1,0 +1,144 @@
+parents:
+  - module: cluster
+    profile: aws-network
+
+  - aws-node
+
+config:
+  kube_master_subnet_cidr_prefix: 28
+  kube_master_subnet_public_ip: true
+  kube_master_groups:
+    - kube-master
+
+  aws_kube_master_subnets:
+    - kube_master_1
+    - kube_master_2
+
+  aws_kube_master_machine: t2.medium
+  aws_kube_master_tenancy: default
+  aws_kube_master_monitoring: false
+  aws_kube_master_ebs_type: gp2
+  aws_kube_master_ebs_size: 10
+  aws_kube_master_ebs_iops: null
+  aws_kube_master_ebs_optimized: false
+  aws_kube_master_ebs_encrypted: false
+
+  kube_master_api_port: 6443
+  kube_master_scheduler_port: 10251
+  kube_master_controller_port: 10252
+
+  aws_load_balancer_timeout: 60
+  aws_load_balancer_health_path: /
+  aws_load_balancer_healthy_status: 200
+  aws_load_balancer_health_check_interval: 30
+  aws_load_balancer_health_timeout: 10
+  aws_load_balancer_healthy_threshold: 3
+  aws_load_balancer_unhealthy_threshold: 3
+
+group:
+  etcd:
+  kube-master:
+
+subnet:
+  kube_master_1:
+    network: "@aws_networks"
+    cidr_prefix: "@kube_master_subnet_cidr_prefix"
+    zone_suffix: a
+    use_public_ip: "@kube_master_subnet_public_ip"
+    groups: "@kube_master_groups"
+
+  kube_master_2:
+    network: "@aws_networks"
+    cidr_prefix: "@kube_master_subnet_cidr_prefix"
+    zone_suffix: b
+    use_public_ip: "@kube_master_subnet_public_ip"
+    groups: "@kube_master_groups"
+
+firewall:
+  kube_master_external:
+    network: "@aws_networks"
+    groups: "@kube_master_groups"
+    rules:
+      api_in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_master_api_port"
+        to_port: "@kube_master_api_port"
+
+  kube_master_internal:
+    requires: kube_master_external
+    network: "@aws_networks"
+    groups: "@kube_master_groups"
+    rules:
+      api_in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_master_api_port"
+        to_port: "@kube_master_api_port"
+        source_firewall: kube_master_external
+      scheduler_in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_master_scheduler_port"
+        to_port: "@kube_master_scheduler_port"
+        self_only: true
+      controller_in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_master_controller_port"
+        to_port: "@kube_master_controller_port"
+        self_only: true
+
+load_balancer:
+  kube:
+    provider: aws_application
+    network: "@aws_networks"
+    domain: "@root_domain"
+    internal: false
+    idle_timeout: "@aws_load_balancer_timeout"
+    firewalls:
+      - internet
+      - kube_master_external
+    groups: "@kube_master_groups"
+    listeners:
+      https:
+        port: "@kube_master_api_port"
+        certificate: kube
+        target_port: "@kube_master_api_port"
+        target_protocol: https
+        health_check_path: "@aws_load_balancer_health_path"
+        health_check_interval: "@aws_load_balancer_health_check_interval"
+        health_check_timeout: "@aws_load_balancer_health_timeout"
+        healthy_status: "@aws_load_balancer_healthy_status"
+        healthy_threshold: "@aws_load_balancer_healthy_threshold"
+        unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
+
+server:
+  kube_master:
+    count: 3
+    provider: ec2
+    network: "@aws_networks"
+    subnet: "@aws_kube_master_subnets"
+    image: "@aws_ubuntu_image[<network>]"
+    ssh_port: "@ssh_port"
+    user: "@aws_ubuntu_user"
+    machine: "@aws_kube_master_machine"
+    tenancy: "@aws_kube_master_tenancy"
+    monitoring: "@aws_kube_master_monitoring"
+    ebs_type: "@aws_kube_master_ebs_type"
+    ebs_size: "@aws_kube_master_ebs_size"
+    ebs_iops: "@aws_kube_master_ebs_iops"
+    ebs_iops: "@aws_kube_master_ebs_iops"
+    ebs_optimized: "@aws_kube_master_ebs_optimized"
+    ebs_encrypted: "@aws_kube_master_ebs_encrypted"
+    firewalls:
+      - internet
+      - ssh_external
+      - etcd_internal
+      - kubelet_internal
+      - kube_master_internal
+      - kube_node_internal
+      - weave_internal
+    load_balancer: kube
+    load_balancer_listener: https
+    groups: "@kube_master_groups"
