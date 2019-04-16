@@ -109,7 +109,7 @@ load_balancer:
 server:
   kube_master:
     count: 3
-    provider: ec2
+    provider: ec2_lb
     network: "@aws_networks"
     subnet: "@aws_kube_master_subnets"
     image: "@aws_ubuntu_image[<network>]"
