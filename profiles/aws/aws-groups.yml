@@ -1,6 +1,8 @@
 group:
   etcd:
   weave:
+  kube-master:
+  kube-node:
   k8s-cluster:
     - kube-master
     - kube-node
