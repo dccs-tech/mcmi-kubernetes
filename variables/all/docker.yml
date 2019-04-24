@@ -11,7 +11,7 @@ docker_container_storage_setup: false
 # docker_container_storage_setup_devs: /dev/vdb
 
 ## Uncomment this if you have more than 3 nameservers, then we'll only use the first 3.
-docker_dns_servers_strict: true
+docker_dns_servers_strict: false
 
 # Path used to store Docker data
 docker_daemon_graph: "/var/lib/docker"
