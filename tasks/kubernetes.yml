@@ -1,0 +1,19 @@
+
+cluster:
+  provider: ansible
+  roles: server-admin
+  config: ansible.cfg
+  group_vars: group_vars
+  playbooks: playbooks/cluster.yml
+  admin_user: admin
+  ssh_allow_users: admin
+  local_home_dir: /root
+  kube_service_addresses: 10.1.0.0/16
+  kube_pods_subnet: 10.2.0.0/16
+
+client:
+  provider: ansible
+  roles: server-admin
+  config: ansible.cfg
+  group_vars: group_vars
+  playbooks: playbooks/client.yml
