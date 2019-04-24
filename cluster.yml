@@ -1,7 +1,6 @@
 - hosts: all
   roles:
     - { role: system-core }
-    - { role: dev-sec.ssh-hardening }
 
 - name: Include Kubernetes tasks
   include: kubespray/cluster.yml
