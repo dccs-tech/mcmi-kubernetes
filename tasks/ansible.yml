@@ -1,0 +1,22 @@
+
+_ansible: &ansible
+  provider: ansible
+  roles: server-admin
+  config: ansible.cfg
+  group_vars: variables
+
+_home: &home
+  local_home_dir: /var/local/cenv
+
+
+info:
+  <<: *ansible
+  playbooks: playbooks/vars.yml
+
+cluster:
+  <<: [*ansible *home]
+  playbooks: playbooks/cluster.yml
+
+client:
+  <<: [*ansible, *home]
+  playbooks: playbooks/client.yml

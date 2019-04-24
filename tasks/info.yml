@@ -1,7 +1,0 @@
-
-info:
-  provider: ansible
-  roles: server-admin
-  config: ansible.cfg
-  group_vars: variables
-  playbooks: playbooks/vars.yml

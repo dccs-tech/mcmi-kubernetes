@@ -1,19 +1,21 @@
 
-init:
+_recovery: &recovery
   provider: remote_script
-  script: scripts/init-server.sh
   roles: server-admin
   sudo: true
+
+
+init:
+  <<: *recovery
+  script: scripts/init-server.sh
   args:
     - "@backup_device"
   options:
     backup_device: /dev/sda3
 
 restore:
-  provider: remote_script
+  <<: *recovery
   script: scripts/restore-server.sh
-  roles: server-admin
-  sudo: true
   args:
     - "@backup_device"
     - "@target_device"
