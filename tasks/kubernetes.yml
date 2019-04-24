@@ -3,7 +3,7 @@ cluster:
   provider: ansible
   roles: server-admin
   config: ansible.cfg
-  group_vars: group_vars
+  group_vars: variables
   playbooks: playbooks/cluster.yml
   local_home_dir: /var/local/cenv
 
@@ -11,6 +11,6 @@ client:
   provider: ansible
   roles: server-admin
   config: ansible.cfg
-  group_vars: group_vars
+  group_vars: variables
   playbooks: playbooks/client.yml
   local_home_dir: /var/local/cenv
