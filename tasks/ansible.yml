@@ -14,7 +14,7 @@ info:
   playbooks: playbooks/vars.yml
 
 cluster:
-  <<: [*ansible *home]
+  <<: [*ansible, *home]
   playbooks: playbooks/cluster.yml
 
 client:
