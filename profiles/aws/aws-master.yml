@@ -86,6 +86,7 @@ load_balancer:
   kube:
     provider: aws_application
     network: "@aws_networks"
+    subnets: "@aws_kube_master_subnets"
     domain: "@root_domain"
     internal: false
     idle_timeout: "@aws_load_balancer_timeout"
