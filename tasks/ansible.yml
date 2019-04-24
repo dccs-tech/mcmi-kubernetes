@@ -11,12 +11,12 @@ _home: &home
 
 info:
   <<: *ansible
-  playbooks: playbooks/vars.yml
+  playbooks: variables.yml
 
 cluster:
   <<: [*ansible, *home]
-  playbooks: playbooks/cluster.yml
+  playbooks: cluster.yml
 
 client:
   <<: [*ansible, *home]
-  playbooks: playbooks/client.yml
+  playbooks: client.yml
