@@ -6,8 +6,8 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$([ `readlink "$0"` ] && echo "`readlink "$0"`" || echo "$0")")"; pwd -P)"
 cd "$SCRIPT_DIR/.."
 
-BACKUP_DEVICE="${1:-/dev/sda3}"
-TARGET_DEVICE="${1:-/dev/sda2}"
+BACKUP_DEVICE="$1"
+TARGET_DEVICE="$2"
 
 #-------------------------------------------------------------------------------
 

@@ -6,7 +6,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$([ `readlink "$0"` ] && echo "`readlink "$0"`" || echo "$0")")"; pwd -P)"
 cd "$SCRIPT_DIR/.."
 
-BACKUP_DEVICE="${1:-/dev/sda3}"
+BACKUP_DEVICE="$1"
 
 #-------------------------------------------------------------------------------
 
@@ -18,6 +18,6 @@ sudo apt-get upgrade -y
 sudo add-apt-repository -y ppa:teejee2008/ppa
 sudo apt-get update
 sudo apt-get install -y timeshift
-  
+
 # Create system restore point
 sudo timeshift --create --scripted --yes --rsync --snapshot-device "$BACKUP_DEVICE"
