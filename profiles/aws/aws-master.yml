@@ -8,6 +8,7 @@ config:
   aws_kube_master_subnets:
     - kube_master_1
     - kube_master_2
+    - kube_master_3
 
   aws_kube_master_machine: t2.medium
   aws_kube_master_tenancy: default
@@ -44,6 +45,14 @@ subnet:
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: b
+    use_public_ip: "@kube_master_subnet_public_ip"
+    groups: kube-master
+
+  kube_master_3:
+    when_in: "@aws_kube_master_subnets"
+    network: "@aws_networks"
+    cidr_prefix: "@kube_master_subnet_cidr_prefix"
+    zone_suffix: c
     use_public_ip: "@kube_master_subnet_public_ip"
     groups: kube-master
 
@@ -109,7 +118,7 @@ load_balancer:
 
 server:
   kube_master:
-    count: 3
+    count: 1
     provider: ec2_lb
     network: "@aws_networks"
     subnet: "@aws_kube_master_subnets"
