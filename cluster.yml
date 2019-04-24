@@ -5,7 +5,7 @@
     - { role: dev-sec.ssh-hardening }
 
 - name: Include Kubernetes tasks
-  include: ../kubespray/cluster.yml
+  include: kubespray/cluster.yml
 
 - name: Configure local Kubernetes utilities
   include: client.yml
