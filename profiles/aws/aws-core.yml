@@ -40,13 +40,13 @@ firewall:
         protocol: tcp
         from_port: "@kubelet_port"
         to_port: "@kubelet_port"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
       kubelet_ro_in:
         mode: ingress
         protocol: tcp
         from_port: "@kubelet_ro_port"
         to_port: "@kubelet_ro_port"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
 
   etcd_internal:
     network: "@aws_networks"
@@ -59,7 +59,7 @@ firewall:
         protocol: tcp
         from_port: "@etcd_port_low"
         to_port: "@etcd_port_high"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets.cidr"
 
   weave_internal:
     network: "@aws_networks"
@@ -72,7 +72,7 @@ firewall:
         protocol: tcp
         from_port: "@weave_port_low"
         to_port: "@weave_port_high"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
 
 provision:
   credentials:

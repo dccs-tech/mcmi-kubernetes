@@ -24,7 +24,7 @@ config:
   kube_master_controller_port: 10252
 
   aws_load_balancer_timeout: 60
-  aws_load_balancer_health_path: /
+  aws_load_balancer_health_path: /healthz
   aws_load_balancer_healthy_status: 200
   aws_load_balancer_health_check_interval: 30
   aws_load_balancer_health_timeout: 10
@@ -77,19 +77,19 @@ firewall:
         protocol: tcp
         from_port: "@kube_master_api_port"
         to_port: "@kube_master_api_port"
-        source_firewall: kube_master_external
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
       scheduler_in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_scheduler_port"
         to_port: "@kube_master_scheduler_port"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
       controller_in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_controller_port"
         to_port: "@kube_master_controller_port"
-        self_only: true
+        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
 
 load_balancer:
   kube:
