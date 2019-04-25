@@ -14,9 +14,13 @@ info:
   playbooks: variables.yml
 
 cluster:
-  <<: [*ansible, *home]
+  <<: *ansible
   playbooks: cluster.yml
+  variables:
+    <<: *home
 
 client:
-  <<: [*ansible, *home]
+  <<: *ansible
   playbooks: client.yml
+  variables:
+    <<: *home
