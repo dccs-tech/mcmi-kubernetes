@@ -1,36 +1,6 @@
 parents:
   - aws-node
 
-config:
-  kube_master_subnet_cidr_prefix: 28
-  kube_master_subnet_public_ip: true
-
-  aws_kube_master_subnets:
-    - kube_master_1
-    - kube_master_2
-    - kube_master_3
-
-  aws_kube_master_machine: t2.medium
-  aws_kube_master_tenancy: default
-  aws_kube_master_monitoring: false
-  aws_kube_master_ebs_type: gp2
-  aws_kube_master_ebs_size: 10
-  aws_kube_master_ebs_iops: null
-  aws_kube_master_ebs_optimized: false
-  aws_kube_master_ebs_encrypted: false
-
-  kube_master_api_port: 6443
-  kube_master_scheduler_port: 10251
-  kube_master_controller_port: 10252
-
-  aws_load_balancer_timeout: 60
-  aws_load_balancer_health_path: /healthz
-  aws_load_balancer_healthy_status: 200
-  aws_load_balancer_health_check_interval: 30
-  aws_load_balancer_health_timeout: 10
-  aws_load_balancer_healthy_threshold: 3
-  aws_load_balancer_unhealthy_threshold: 3
-
 subnet:
   kube_master_1:
     when_in: "@aws_kube_master_subnets"

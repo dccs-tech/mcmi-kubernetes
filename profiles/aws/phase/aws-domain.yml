@@ -1,5 +1,6 @@
 parents:
   - aws-groups
+  - aws-config
 
 domain:
   "@root_domain":

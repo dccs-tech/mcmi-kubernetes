@@ -1,0 +1,7 @@
+parents:
+  - aws-config
+
+provision:
+  client:
+    task: client
+    kube_api_domain: "kube.@root_domain"
