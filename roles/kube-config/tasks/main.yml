@@ -1,12 +1,33 @@
 
-- name: Copy admin kubectl config to Ansible host
-  fetch:
+- name: Copy Kubernetes client configuration to temp file
+  copy:
     src: "{{ kube_config_dir }}/admin.conf"
+    dest: "/tmp/kube-config"
+    remote_src: yes
+  run_once: yes
+
+- name: Update Kubernetes API domain
+  lineinfile:
+    dest: "/tmp/kube-config"
+    regexp: '^    server: https://\d+\.\d+\.\d+\.\d+:(\d+)$'
+    line: '    server: https://{{ kube_api_domain }}:\1'
+    state: present
+    backrefs: yes
+  run_once: yes
+
+- name: Copy Kubernetes client configuration to Ansible host
+  fetch:
+    src: "/tmp/kube-config"
     dest: "{{ local_kubectl_dir }}/config"
     flat: yes
     validate_checksum: yes
   run_once: yes
 
+- name: Remove temp Kubernetes client configuration
+  file:
+    state: absent
+    path: "/tmp/kube-config"
+  run_once: yes
 
 - name: Copy Helm security certificate authority to Ansible host
   fetch:
