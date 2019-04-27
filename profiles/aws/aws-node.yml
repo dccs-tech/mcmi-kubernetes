@@ -36,7 +36,7 @@ firewall:
         protocol: tcp
         from_port: "@kube_node_nodeport_port_low"
         to_port: "@kube_node_nodeport_port_high"
-        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
+        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
 server:
   kube_node:

@@ -47,19 +47,19 @@ firewall:
         protocol: tcp
         from_port: "@kube_master_api_port"
         to_port: "@kube_master_api_port"
-        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
+        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
       scheduler_in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_scheduler_port"
         to_port: "@kube_master_scheduler_port"
-        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
+        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
       controller_in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_controller_port"
         to_port: "@kube_master_controller_port"
-        cidrs: "&subnet.@aws_kube_master_subnets,@aws_kube_node_subnets.cidr"
+        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
 load_balancer:
   kube:
