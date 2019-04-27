@@ -1,5 +1,4 @@
 from systems.command.types import module
-from utility.data import ensure_list
 from utility.temp import temp_dir
 
 import os
