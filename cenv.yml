@@ -1,13 +1,16 @@
 env:
   HELM_TLS_VERIFY: false
   HELM_TLS_ENABLE: true
+
 scripts: scripts/install.sh
 requirements: kubespray/requirements.txt
+
+tasks: tasks
 profiles:
   - profiles/aws
   - profiles/aws/phase
-tasks: tasks
-lib: false
+
+lib: cenv
 modules:
   cluster:
     provider: git
