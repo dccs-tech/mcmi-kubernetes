@@ -7,4 +7,3 @@ domain:
     provider: route53
     keep: true
     email: "@root_domain_email"
-    groups: k8s-cluster
