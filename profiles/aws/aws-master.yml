@@ -2,7 +2,7 @@ parents:
   - aws-node
 
 subnet:
-  kube_master_1:
+  kube-master-1:
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
@@ -10,7 +10,7 @@ subnet:
     use_public_ip: "@kube_master_subnet_public_ip"
     groups: kube-master
 
-  kube_master_2:
+  kube-master-2:
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
@@ -18,7 +18,7 @@ subnet:
     use_public_ip: "@kube_master_subnet_public_ip"
     groups: kube-master
 
-  kube_master_3:
+  kube-master-3:
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
@@ -27,41 +27,55 @@ subnet:
     groups: kube-master
 
 firewall:
-  kube_master_external:
+  kube-master-external:
     network: "@aws_networks"
     groups: kube-master
     rules:
-      api_in:
+      api-in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_api_port"
         to_port: "@kube_master_api_port"
 
-  kube_master_internal:
-    requires: kube_master_external
+  kube-master-internal:
+    requires: kube-master-external
     network: "@aws_networks"
-    groups: kube-master
+    groups:
+      - etcd
+      - kube-master
     rules:
-      api_in:
+      lb-in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_master_api_port"
+        to_port: "@kube_master_api_port"
+        source_firewall: kube-master-external
+      api-in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_api_port"
         to_port: "@kube_master_api_port"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      scheduler_in:
+      scheduler-in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_scheduler_port"
         to_port: "@kube_master_scheduler_port"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      controller_in:
+      controller-in:
         mode: ingress
         protocol: tcp
         from_port: "@kube_master_controller_port"
         to_port: "@kube_master_controller_port"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+      etcd-in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@etcd_port_low"
+        to_port: "@etcd_port_high"
+        cidrs: "&subnet:@aws_kube_master_subnets:cidr"
 
-load_balancer:
+load-balancer:
   kube:
     provider: aws_application
     network: "@aws_networks"
@@ -72,7 +86,7 @@ load_balancer:
     groups: kube-master
     firewalls:
       - internet
-      - kube_master_external
+      - kube-master-external
     listeners:
       https:
         port: "@kube_master_api_port"
@@ -87,7 +101,7 @@ load_balancer:
         unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
 
 server:
-  kube_master:
+  kube-master:
     count: 1
     provider: ec2_lb
     network: "@aws_networks"
@@ -111,9 +125,6 @@ server:
       - kube-master
     firewalls:
       - internet
-      - ssh_external
-      - etcd_internal
-      - kubelet_internal
-      - kube_master_internal
-      - kube_node_internal
-      - weave_internal
+      - ssh-external
+      - kube-internal
+      - kube-master-internal

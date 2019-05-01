@@ -17,47 +17,36 @@ certificate:
     groups: k8s-cluster
 
 firewall:
-  kubelet_internal:
+  kube-internal:
     network: "@aws_networks"
-    groups: k8s-cluster
+    groups:
+      - weave
+      - nodeport
+      - k8s-cluster
     rules:
-      kubelet_in:
+      kubelet-in:
         mode: ingress
         protocol: tcp
         from_port: "@kubelet_port"
         to_port: "@kubelet_port"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      kubelet_ro_in:
+      kubelet-ro-in:
         mode: ingress
         protocol: tcp
         from_port: "@kubelet_ro_port"
         to_port: "@kubelet_ro_port"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-
-  etcd_internal:
-    network: "@aws_networks"
-    groups:
-      - etcd
-      - k8s-cluster
-    rules:
-      tcp_in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@etcd_port_low"
-        to_port: "@etcd_port_high"
-        cidrs: "&subnet:@aws_kube_master_subnets:cidr"
-
-  weave_internal:
-    network: "@aws_networks"
-    groups:
-      - weave
-      - k8s-cluster
-    rules:
-      tcp_in:
+      weave-in:
         mode: ingress
         protocol: tcp
         from_port: "@weave_port_low"
         to_port: "@weave_port_high"
+        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+      nodeport-in:
+        mode: ingress
+        protocol: tcp
+        from_port: "@kube_node_nodeport_port_low"
+        to_port: "@kube_node_nodeport_port_high"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
 provision:

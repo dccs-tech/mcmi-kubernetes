@@ -2,7 +2,7 @@ parents:
   - aws-core
 
 subnet:
-  kube_node_1:
+  kube-node-1:
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -10,7 +10,7 @@ subnet:
     use_public_ip: "@kube_node_subnet_public_ip"
     groups: kube-node
 
-  kube_node_2:
+  kube-node-2:
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -18,7 +18,7 @@ subnet:
     use_public_ip: "@kube_node_subnet_public_ip"
     groups: kube-node
 
-  kube_node_3:
+  kube-node-3:
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -26,20 +26,8 @@ subnet:
     use_public_ip: "@kube_node_subnet_public_ip"
     groups: kube-node
 
-firewall:
-  kube_node_internal:
-    network: "@aws_networks"
-    groups: kube-node
-    rules:
-      nodeport_in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_node_nodeport_port_low"
-        to_port: "@kube_node_nodeport_port_high"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-
 server:
-  kube_node:
+  kube-node:
     count: 2
     provider: ec2
     network: "@aws_networks"
@@ -59,7 +47,5 @@ server:
     groups: kube-node
     firewalls:
       - internet
-      - ssh_external
-      - kubelet_internal
-      - kube_node_internal
-      - weave_internal
+      - ssh-external
+      - kube-internal
