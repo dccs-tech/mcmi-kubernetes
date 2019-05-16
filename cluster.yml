@@ -1,7 +1,3 @@
-- hosts: all
-  roles:
-    - { role: system-core }
-
 - name: Include Kubernetes tasks
   include: kubespray/cluster.yml
 
