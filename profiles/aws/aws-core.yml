@@ -49,7 +49,7 @@ firewall:
         to_port: "@kube_node_nodeport_port_high"
         cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
-provision:
+run:
   credentials:
     command: server rotate
 
