@@ -26,7 +26,7 @@ class Command(
                 env = {
                     "KUBECONFIG": os.path.join(temp.link(config_path), 'config')
                 },
-                cwd = temp.temp_path,
+                cwd = temp.base_path,
                 display = True
             )
             if not success:
