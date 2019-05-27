@@ -22,7 +22,7 @@ config:
     - kube-master-2
     - kube-master-3
 
-  aws_kube_master_machine: t2.medium
+  aws_kube_master_machine: t3.medium
   aws_kube_master_tenancy: default
   aws_kube_master_monitoring: false
   aws_kube_master_ebs_type: gp2
@@ -52,7 +52,7 @@ config:
     - kube-node-2
     - kube-node-3
 
-  aws_kube_node_machine: t2.medium
+  aws_kube_node_machine: t3.medium
   aws_kube_node_tenancy: default
   aws_kube_node_monitoring: false
   aws_kube_node_ebs_type: gp2
