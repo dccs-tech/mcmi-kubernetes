@@ -81,7 +81,7 @@ firewall:
         to_port: "@etcd_port_high"
         cidrs: "&subnet:@aws_kube_master_subnets:cidr"
 
-load-balancer:
+load_balancer:
   kube:
     provider: aws_application
     network: "@aws_networks"
