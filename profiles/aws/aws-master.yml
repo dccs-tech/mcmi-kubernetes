@@ -3,27 +3,33 @@ parents:
 
 subnet:
   kube-master-1:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_master_subnet_public_ip"
+    nat_subnet: nat-a
     groups: kube-master
 
   kube-master-2:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_master_subnet_public_ip"
+    nat_subnet: nat-b
     groups: kube-master
 
   kube-master-3:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
     zone_suffix: c
     use_public_ip: "@kube_master_subnet_public_ip"
+    nat_subnet: nat-c
     groups: kube-master
 
 firewall:

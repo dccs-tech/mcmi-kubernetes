@@ -3,27 +3,33 @@ parents:
 
 subnet:
   kube-node-1:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_node_subnet_public_ip"
+    nat_subnet: nat-a
     groups: kube-node
 
   kube-node-2:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_node_subnet_public_ip"
+    nat_subnet: nat-b
     groups: kube-node
 
   kube-node-3:
+    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: c
     use_public_ip: "@kube_node_subnet_public_ip"
+    nat_subnet: nat-c
     groups: kube-node
 
 server:

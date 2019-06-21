@@ -15,7 +15,7 @@ config:
 
   # Kubernetes master configurations
   kube_master_subnet_cidr_prefix: 28
-  kube_master_subnet_public_ip: true
+  kube_master_subnet_public_ip: false
 
   aws_kube_master_subnets:
     - kube-master-1
@@ -45,7 +45,7 @@ config:
 
   # Kubernetes node configurations
   kube_node_subnet_cidr_prefix: 20
-  kube_node_subnet_public_ip: true
+  kube_node_subnet_public_ip: false
 
   aws_kube_node_subnets:
     - kube-node-1
