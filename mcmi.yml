@@ -10,9 +10,9 @@ profiles:
   - profiles/aws
   - profiles/aws/phase
 
-lib: cenv
+lib: mcmi
 modules:
   cluster:
     provider: git
-    remote: https://github.com/venturiscm/cenv-cluster.git
+    remote: https://github.com/dccs-tech/mcmi-cluster.git
     reference: master

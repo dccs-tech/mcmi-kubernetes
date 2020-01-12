@@ -6,7 +6,7 @@ _ansible: &ansible
   group_vars: variables
 
 _home: &home
-  local_home_dir: /var/local/cenv
+  local_home_dir: /var/local/mcmi
 
 
 info:
