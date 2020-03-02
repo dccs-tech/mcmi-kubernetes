@@ -1,26 +1,18 @@
 
 _ansible: &ansible
   provider: ansible
-  roles: server-admin
-  config: ansible.cfg
-  group_vars: variables
+  roles: kubernetes-admin
+  directory: ansible
+  variables:
+    local_home_dir: /var/local/mcmi
+  servers:
+    - name.startswith=kube
 
-_home: &home
-  local_home_dir: /var/local/mcmi
-
-
-info:
-  <<: *ansible
-  playbooks: variables.yml
 
 cluster:
   <<: *ansible
   playbooks: cluster.yml
-  variables:
-    <<: *home
 
 client:
   <<: *ansible
   playbooks: client.yml
-  variables:
-    <<: *home

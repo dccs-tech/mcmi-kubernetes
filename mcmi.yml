@@ -3,12 +3,15 @@ env:
   HELM_TLS_ENABLE: true
 
 scripts: scripts/install.sh
-requirements: kubespray/requirements.txt
+requirements: ansible/kubespray/requirements.txt
 
 tasks: tasks
 profiles:
   - profiles/aws
   - profiles/aws/phase
+
+roles:
+  kubernetes-admin: Kubernetes administrator (full privileges over all Kubernetes cluster)
 
 lib: mcmi
 modules:
