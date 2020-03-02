@@ -19,6 +19,7 @@ group:
 
 domain:
   "@root_domain":
+    keep: true
     certificate_authority: letsencrypt
 
 certificate:
