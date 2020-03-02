@@ -3,7 +3,6 @@ parents:
 
 subnet:
   kube-master-1:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
@@ -13,7 +12,6 @@ subnet:
     groups: kube-master
 
   kube-master-2:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"
@@ -23,7 +21,6 @@ subnet:
     groups: kube-master
 
   kube-master-3:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_master_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_master_subnet_cidr_prefix"

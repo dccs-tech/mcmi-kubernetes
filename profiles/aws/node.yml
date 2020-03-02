@@ -3,7 +3,6 @@ parents:
 
 subnet:
   kube-node-1:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -13,7 +12,6 @@ subnet:
     groups: kube-node
 
   kube-node-2:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -23,7 +21,6 @@ subnet:
     groups: kube-node
 
   kube-node-3:
-    requires: "@aws_nat_subnets"
     when_in: "@aws_kube_node_subnets"
     network: "@aws_networks"
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
@@ -34,7 +31,7 @@ subnet:
 
 server:
   kube-node:
-    count: 2
+    count: 1
     provider: ec2
     network: "@aws_networks"
     subnet: "@aws_kube_node_subnets"
