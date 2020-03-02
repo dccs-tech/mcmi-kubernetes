@@ -1,5 +1,5 @@
 
-local_home_dir: "/home/vagrant"
+local_home_dir: /var/local/mcmi
 
 kube_config_dir: /etc/kubernetes
 local_kubectl_dir: "{{ local_home_dir }}/.kube"
