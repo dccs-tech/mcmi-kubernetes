@@ -1,9 +1,18 @@
 parents:
   - module: cluster
-    profile: aws-network
+    profile: aws/config
 
-  - aws-domain
-  - aws-config
+  - aws/config
+
+group:
+  etcd:
+  weave:
+  nodeport:
+  kube-master:
+  kube-node:
+  k8s-cluster:
+    - kube-master
+    - kube-node
 
 domain:
   "@root_domain":

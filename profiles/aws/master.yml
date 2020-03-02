@@ -1,5 +1,5 @@
 parents:
-  - aws-node
+  - aws/node
 
 subnet:
   kube-master-1:

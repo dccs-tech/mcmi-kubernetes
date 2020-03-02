@@ -1,0 +1,29 @@
+config:
+    # Kubernetes core configurations
+    kube_cluster_name: kube
+    kube_service_addresses: 10.250.0.0/16
+    kube_pods_subnet: 10.251.0.0/16
+
+    kubelet_port: 10250
+    kubelet_ro_port: 10255
+
+    etcd_port_low: 2379
+    etcd_port_high: 2380
+
+    weave_port_low: 6783
+    weave_port_high: 6784
+
+    # Kubernetes master configurations
+    kube_master_subnet_cidr_prefix: 28
+    kube_master_subnet_public_ip: true
+
+    kube_master_api_port: 6443
+    kube_master_scheduler_port: 10251
+    kube_master_controller_port: 10252
+
+    # Kubernetes node configurations
+    kube_node_subnet_cidr_prefix: 20
+    kube_node_subnet_public_ip: true
+
+    kube_node_nodeport_port_low: 30000
+    kube_node_nodeport_port_high: 32767

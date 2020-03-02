@@ -1,9 +1,0 @@
-parents:
-  - aws-groups
-  - aws-config
-
-domain:
-  "@root_domain":
-    provider: route53
-    keep: true
-    email: "@root_domain_email"
