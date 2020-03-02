@@ -5,15 +5,9 @@ env:
 scripts: scripts/install.sh
 requirements: ansible/kubespray/requirements.txt
 
-tasks: tasks
-profiles:
-  - profiles/aws
-  - profiles/aws/phase
-
 roles:
   kubernetes-admin: Kubernetes administrator (full privileges over Kubernetes cluster)
 
-lib: mcmi
 modules:
   cluster:
     provider: git
