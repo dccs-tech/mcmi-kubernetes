@@ -3,10 +3,8 @@ _ansible: &ansible
   provider: ansible
   roles: kubernetes-admin
   directory: ansible
-  variables:
-    local_home_dir: /var/local/mcmi
   servers:
-    - name.startswith=kube
+    - name.startswith=kube-
 
 
 cluster:
