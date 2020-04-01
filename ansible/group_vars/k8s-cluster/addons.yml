@@ -2,6 +2,7 @@
 dashboard_enabled: true
 
 helm_enabled: true
+tiller_enable_tls: true
 
 registry_enabled: true
 registry_namespace: kube-system
