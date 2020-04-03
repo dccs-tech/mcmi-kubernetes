@@ -20,7 +20,7 @@ class Command(
         with temp_dir() as temp:
             config_path = os.path.join(self.manager.data_dir, '.kube')
 
-            command = ['kubectl'] + self.options.get('args', [])
+            command = ['kubectl', '--insecure-skip-tls-verify=true'] + self.options.get('args', [])
             success = self.sh(
                 command,
                 env = {
