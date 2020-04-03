@@ -18,10 +18,7 @@ config:
   aws_kube_master_ebs_encrypted: false
 
   aws_load_balancer_timeout: 60
-  aws_load_balancer_health_path: /healthz
-  aws_load_balancer_healthy_status: 200
   aws_load_balancer_health_check_interval: 30
-  aws_load_balancer_health_timeout: 10
   aws_load_balancer_healthy_threshold: 3
   aws_load_balancer_unhealthy_threshold: 3
 

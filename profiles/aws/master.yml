@@ -80,26 +80,18 @@ firewall:
 
 load_balancer:
   kube:
-    provider: aws_application
+    provider: aws_network
     network: "@aws_networks"
     subnets: "@aws_kube_master_subnets"
     domain: "@root_domain"
     internal: false
-    idle_timeout: "@aws_load_balancer_timeout"
     groups: kube-master
-    firewalls:
-      - internet
-      - kube-master-external
     listeners:
-      https:
+      tcp:
         port: "@kube_master_api_port"
-        certificate: kube
         target_port: "@kube_master_api_port"
-        target_protocol: https
-        health_check_path: "@aws_load_balancer_health_path"
+        target_protocol: tcp
         health_check_interval: "@aws_load_balancer_health_check_interval"
-        health_check_timeout: "@aws_load_balancer_health_timeout"
-        healthy_status: "@aws_load_balancer_healthy_status"
         healthy_threshold: "@aws_load_balancer_healthy_threshold"
         unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
 
@@ -122,12 +114,13 @@ server:
     ebs_optimized: "@aws_kube_master_ebs_optimized"
     ebs_encrypted: "@aws_kube_master_ebs_encrypted"
     load_balancer: kube
-    load_balancer_listener: https
+    load_balancer_listener: tcp
     groups:
       - etcd
       - kube-master
     firewalls:
       - internet
+      - all
       - ssh-external
       - kube-internal
       - kube-master-internal
