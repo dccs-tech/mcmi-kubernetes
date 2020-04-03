@@ -3,6 +3,7 @@ dashboard_enabled: true
 
 helm_enabled: true
 tiller_enable_tls: true
+tiller_max_history: 5
 
 registry_enabled: true
 registry_namespace: kube-system

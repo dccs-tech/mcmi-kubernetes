@@ -4,12 +4,12 @@ etcd_kubeadm_enabled: false
 
 bin_dir: /usr/local/bin
 
-loadbalancer_apiserver_localhost: true
-loadbalancer_apiserver_type: haproxy
-loadbalancer_apiserver_port: 6443
-loadbalancer_apiserver_healthcheck_port: 8081
+loadbalancer_apiserver_localhost: false
+loadbalancer_apiserver:
+  port: 6443
 
 kubelet_load_modules: true
+kubelet_rotate_certificates: true
 
 upstream_dns_servers:
   - 8.8.8.8

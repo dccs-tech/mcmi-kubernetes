@@ -1,5 +1,4 @@
 ---
-cluster_name: kube
 ndots: 2
 dns_mode: coredns
 
@@ -16,7 +15,7 @@ skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('addres
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
 dns_domain: "{{ cluster_name }}"
 
-deploy_netchecker: false
+deploy_netchecker: true
 
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
@@ -72,14 +71,14 @@ kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_cert
 
 k8s_image_pull_policy: IfNotPresent
 
-kubernetes_audit: false
+kubernetes_audit: true
 
 dynamic_kubelet_configuration: false
 
 default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
 
-podsecuritypolicy_enabled: false
+podsecuritypolicy_enabled: true
 
 kubeconfig_localhost: false
 kubectl_localhost: false
