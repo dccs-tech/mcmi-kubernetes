@@ -26,7 +26,7 @@ class Command(
                 env = {
                     "KUBECONFIG": os.path.join(temp.link(config_path), 'config')
                 },
-                cwd = temp.base_path,
+                cwd = self.manager.module_dir,
                 display = True
             )
             if not success:
