@@ -11,7 +11,7 @@ class Command(
         return -80
 
     def groups_allowed(self):
-        return 'server-admin'
+        return 'kubernetes-admin'
 
     def parse_passthrough(self):
         return True
