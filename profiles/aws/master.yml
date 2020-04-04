@@ -120,7 +120,7 @@ server:
       - kube-master
     firewalls:
       - internet
-      - all
       - ssh-external
       - kube-internal
+      - kube-master-external
       - kube-master-internal
