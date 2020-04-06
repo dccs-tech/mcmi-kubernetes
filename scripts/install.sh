@@ -12,4 +12,4 @@ rm -rf /var/lib/apt/lists/*
 
 curl -o helm_install.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get 2>/dev/null
 chmod 700 helm_install.sh
-./helm_install.sh -v v2.16.1
+./helm_install.sh -v v3.1.2
