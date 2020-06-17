@@ -7,5 +7,5 @@ roles:
 modules:
   cluster:
     provider: git
-    remote: https://github.com/dccs-tech/mcmi-cluster.git
+    remote: https://github.com/dccs-tech/zimagi-cluster.git
     reference: master
