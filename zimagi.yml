@@ -1,3 +1,5 @@
+name: kubernetes
+
 scripts: scripts/install.sh
 requirements: ansible/kubespray/requirements.txt
 
