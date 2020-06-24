@@ -1,3 +1,2 @@
----
 etcd_memory_limit: "512M"
 etcd_deployment_type: docker

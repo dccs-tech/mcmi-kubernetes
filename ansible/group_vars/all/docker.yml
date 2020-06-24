@@ -1,4 +1,3 @@
----
 docker_storage_options: -s overlay2
 docker_container_storage_setup: false
 docker_dns_servers_strict: false

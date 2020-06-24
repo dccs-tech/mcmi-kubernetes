@@ -1,4 +1,3 @@
-
 local_home_dir: /var/local/zimagi
 
 kube_config_dir: /etc/kubernetes

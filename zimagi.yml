@@ -4,5 +4,5 @@ scripts: scripts/install.sh
 requirements: ansible/kubespray/requirements.txt
 
 modules:
-  - remote: https://github.com/dccs-tech/zimagi-cluster.git
-    reference: master
+    - remote: https://github.com/dccs-tech/zimagi-cluster.git
+      reference: master

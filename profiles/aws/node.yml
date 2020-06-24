@@ -1,57 +1,57 @@
 parents:
-  - aws/core
+    - aws/core
 
 config:
-  node_ssh_firewall: "?> @kube_node_subnet_public_ip ? 'ssh-external' | 'ssh-internal'"
+    node_ssh_firewall: "?> @kube_node_subnet_public_ip ? 'ssh-external' | 'ssh-internal'"
 
 subnet:
-  kube-node-1:
-    when_in: "@aws_kube_node_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_node_subnet_cidr_prefix"
-    zone_suffix: a
-    use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-a' | None"
-    groups: kube-node
+    kube-node-1:
+        when_in: "@aws_kube_node_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_node_subnet_cidr_prefix"
+        zone_suffix: a
+        use_public_ip: "@kube_node_subnet_public_ip"
+        nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-a' | None"
+        groups: kube-node
 
-  kube-node-2:
-    when_in: "@aws_kube_node_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_node_subnet_cidr_prefix"
-    zone_suffix: b
-    use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-b' | None"
-    groups: kube-node
+    kube-node-2:
+        when_in: "@aws_kube_node_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_node_subnet_cidr_prefix"
+        zone_suffix: b
+        use_public_ip: "@kube_node_subnet_public_ip"
+        nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-b' | None"
+        groups: kube-node
 
-  kube-node-3:
-    when_in: "@aws_kube_node_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_node_subnet_cidr_prefix"
-    zone_suffix: c
-    use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-c' | None"
-    groups: kube-node
+    kube-node-3:
+        when_in: "@aws_kube_node_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_node_subnet_cidr_prefix"
+        zone_suffix: c
+        use_public_ip: "@kube_node_subnet_public_ip"
+        nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-c' | None"
+        groups: kube-node
 
 server:
-  kube-node:
-    count: 1
-    provider: ec2
-    network: "@aws_networks"
-    subnet: "@aws_kube_node_subnets"
-    image: "@aws_ubuntu_image[<network>]"
-    ssh_port: "@ssh_port"
-    user: "@aws_ubuntu_user"
-    machine: "@aws_kube_node_machine"
-    tenancy: "@aws_kube_node_tenancy"
-    monitoring: "@aws_kube_node_monitoring"
-    ebs_type: "@aws_kube_node_ebs_type"
-    ebs_size: "@aws_kube_node_ebs_size"
-    ebs_iops: "@aws_kube_node_ebs_iops"
-    ebs_iops: "@aws_kube_node_ebs_iops"
-    ebs_optimized: "@aws_kube_node_ebs_optimized"
-    ebs_encrypted: "@aws_kube_node_ebs_encrypted"
-    groups: kube-node
-    firewalls:
-      - internet
-      - "@node_ssh_firewall"
-      - kube-internal
+    kube-node:
+        count: 1
+        provider: ec2
+        network: "@aws_networks"
+        subnet: "@aws_kube_node_subnets"
+        image: "@aws_ubuntu_image[<network>]"
+        ssh_port: "@ssh_port"
+        user: "@aws_ubuntu_user"
+        machine: "@aws_kube_node_machine"
+        tenancy: "@aws_kube_node_tenancy"
+        monitoring: "@aws_kube_node_monitoring"
+        ebs_type: "@aws_kube_node_ebs_type"
+        ebs_size: "@aws_kube_node_ebs_size"
+        ebs_iops: "@aws_kube_node_ebs_iops"
+        ebs_iops: "@aws_kube_node_ebs_iops"
+        ebs_optimized: "@aws_kube_node_ebs_optimized"
+        ebs_encrypted: "@aws_kube_node_ebs_encrypted"
+        groups: kube-node
+        firewalls:
+            - internet
+            - "@node_ssh_firewall"
+            - kube-internal

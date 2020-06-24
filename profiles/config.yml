@@ -28,11 +28,11 @@ config:
     kube_node_nodeport_port_high: 32767
 
 group:
-  etcd:
-  weave:
-  nodeport:
-  kube-master:
-  kube-node:
-  k8s-cluster:
-    - kube-master
-    - kube-node
+    etcd:
+    weave:
+    nodeport:
+    kube-master:
+    kube-node:
+    k8s-cluster:
+        - kube-master
+        - kube-node

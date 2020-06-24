@@ -1,16 +1,14 @@
-
 _ansible: &ansible
-  provider: ansible
-  roles: kubernetes-admin
-  directory: ansible
-  servers:
-    - name.startswith=kube-
-
+    provider: ansible
+    roles: kubernetes-admin
+    directory: ansible
+    servers:
+        - name.startswith=kube-
 
 cluster:
-  <<: *ansible
-  playbooks: cluster.yml
+    <<: *ansible
+    playbooks: cluster.yml
 
 client:
-  <<: *ansible
-  playbooks: client.yml
+    <<: *ansible
+    playbooks: client.yml

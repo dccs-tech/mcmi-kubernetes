@@ -1,130 +1,130 @@
 parents:
-  - aws/node
+    - aws/node
 
 config:
-  master_ssh_firewall: "?> @kube_master_subnet_public_ip ? 'ssh-external' | 'ssh-internal'"
+    master_ssh_firewall: "?> @kube_master_subnet_public_ip ? 'ssh-external' | 'ssh-internal'"
 
 subnet:
-  kube-master-1:
-    when_in: "@aws_kube_master_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_master_subnet_cidr_prefix"
-    zone_suffix: a
-    use_public_ip: "@kube_master_subnet_public_ip"
-    nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-a' | None"
-    groups: kube-master
+    kube-master-1:
+        when_in: "@aws_kube_master_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_master_subnet_cidr_prefix"
+        zone_suffix: a
+        use_public_ip: "@kube_master_subnet_public_ip"
+        nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-a' | None"
+        groups: kube-master
 
-  kube-master-2:
-    when_in: "@aws_kube_master_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_master_subnet_cidr_prefix"
-    zone_suffix: b
-    use_public_ip: "@kube_master_subnet_public_ip"
-    nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-b' | None"
-    groups: kube-master
+    kube-master-2:
+        when_in: "@aws_kube_master_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_master_subnet_cidr_prefix"
+        zone_suffix: b
+        use_public_ip: "@kube_master_subnet_public_ip"
+        nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-b' | None"
+        groups: kube-master
 
-  kube-master-3:
-    when_in: "@aws_kube_master_subnets"
-    network: "@aws_networks"
-    cidr_prefix: "@kube_master_subnet_cidr_prefix"
-    zone_suffix: c
-    use_public_ip: "@kube_master_subnet_public_ip"
-    nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-c' | None"
-    groups: kube-master
+    kube-master-3:
+        when_in: "@aws_kube_master_subnets"
+        network: "@aws_networks"
+        cidr_prefix: "@kube_master_subnet_cidr_prefix"
+        zone_suffix: c
+        use_public_ip: "@kube_master_subnet_public_ip"
+        nat_subnet: "?> not @kube_master_subnet_public_ip ? 'nat-c' | None"
+        groups: kube-master
 
 firewall:
-  kube-master-external:
-    network: "@aws_networks"
-    groups: kube-master
-    rules:
-      api-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_master_api_port"
-        to_port: "@kube_master_api_port"
+    kube-master-external:
+        network: "@aws_networks"
+        groups: kube-master
+        rules:
+            api-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_master_api_port"
+                to_port: "@kube_master_api_port"
 
-  kube-master-internal:
-    requires: kube-master-external
-    network: "@aws_networks"
-    groups:
-      - etcd
-      - kube-master
-    rules:
-      lb-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_master_api_port"
-        to_port: "@kube_master_api_port"
-        source_firewall: kube-master-external
-      api-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_master_api_port"
-        to_port: "@kube_master_api_port"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      scheduler-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_master_scheduler_port"
-        to_port: "@kube_master_scheduler_port"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      controller-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_master_controller_port"
-        to_port: "@kube_master_controller_port"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      etcd-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@etcd_port_low"
-        to_port: "@etcd_port_high"
-        cidrs: "&subnet:@aws_kube_master_subnets:cidr"
+    kube-master-internal:
+        requires: kube-master-external
+        network: "@aws_networks"
+        groups:
+            - etcd
+            - kube-master
+        rules:
+            lb-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_master_api_port"
+                to_port: "@kube_master_api_port"
+                source_firewall: kube-master-external
+            api-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_master_api_port"
+                to_port: "@kube_master_api_port"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            scheduler-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_master_scheduler_port"
+                to_port: "@kube_master_scheduler_port"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            controller-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_master_controller_port"
+                to_port: "@kube_master_controller_port"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            etcd-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@etcd_port_low"
+                to_port: "@etcd_port_high"
+                cidrs: "&subnet:@aws_kube_master_subnets:cidr"
 
 load_balancer:
-  kube:
-    provider: aws_network
-    network: "@aws_networks"
-    subnets: "@aws_kube_master_subnets"
-    domain: "@root_domain"
-    internal: false
-    groups: kube-master
-    listeners:
-      tcp:
-        port: "@kube_master_api_port"
-        target_port: "@kube_master_api_port"
-        target_protocol: tcp
-        health_check_interval: "@aws_load_balancer_health_check_interval"
-        healthy_threshold: "@aws_load_balancer_healthy_threshold"
-        unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
+    kube:
+        provider: aws_network
+        network: "@aws_networks"
+        subnets: "@aws_kube_master_subnets"
+        domain: "@root_domain"
+        internal: false
+        groups: kube-master
+        listeners:
+            tcp:
+                port: "@kube_master_api_port"
+                target_port: "@kube_master_api_port"
+                target_protocol: tcp
+                health_check_interval: "@aws_load_balancer_health_check_interval"
+                healthy_threshold: "@aws_load_balancer_healthy_threshold"
+                unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
 
 server:
-  kube-master:
-    count: 1
-    provider: ec2_lb
-    network: "@aws_networks"
-    subnet: "@aws_kube_master_subnets"
-    image: "@aws_ubuntu_image[<network>]"
-    ssh_port: "@ssh_port"
-    user: "@aws_ubuntu_user"
-    machine: "@aws_kube_master_machine"
-    tenancy: "@aws_kube_master_tenancy"
-    monitoring: "@aws_kube_master_monitoring"
-    ebs_type: "@aws_kube_master_ebs_type"
-    ebs_size: "@aws_kube_master_ebs_size"
-    ebs_iops: "@aws_kube_master_ebs_iops"
-    ebs_iops: "@aws_kube_master_ebs_iops"
-    ebs_optimized: "@aws_kube_master_ebs_optimized"
-    ebs_encrypted: "@aws_kube_master_ebs_encrypted"
-    load_balancer: kube
-    load_balancer_listeners:
-      - tcp
-    groups:
-      - etcd
-      - kube-master
-    firewalls:
-      - internet
-      - "@master_ssh_firewall"
-      - kube-internal
-      - kube-master-external
-      - kube-master-internal
+    kube-master:
+        count: 1
+        provider: ec2_lb
+        network: "@aws_networks"
+        subnet: "@aws_kube_master_subnets"
+        image: "@aws_ubuntu_image[<network>]"
+        ssh_port: "@ssh_port"
+        user: "@aws_ubuntu_user"
+        machine: "@aws_kube_master_machine"
+        tenancy: "@aws_kube_master_tenancy"
+        monitoring: "@aws_kube_master_monitoring"
+        ebs_type: "@aws_kube_master_ebs_type"
+        ebs_size: "@aws_kube_master_ebs_size"
+        ebs_iops: "@aws_kube_master_ebs_iops"
+        ebs_iops: "@aws_kube_master_ebs_iops"
+        ebs_optimized: "@aws_kube_master_ebs_optimized"
+        ebs_encrypted: "@aws_kube_master_ebs_encrypted"
+        load_balancer: kube
+        load_balancer_listeners:
+            - tcp
+        groups:
+            - etcd
+            - kube-master
+        firewalls:
+            - internet
+            - "@master_ssh_firewall"
+            - kube-internal
+            - kube-master-external
+            - kube-master-internal

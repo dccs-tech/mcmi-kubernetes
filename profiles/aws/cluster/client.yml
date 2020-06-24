@@ -1,7 +1,7 @@
 parents:
-  - aws/config
+    - aws/config
 
 run:
-  client:
-    task: client
-    kube_api_domain: "kube.@root_domain"
+    client:
+        task: client
+        kube_api_domain: "kube.@root_domain"

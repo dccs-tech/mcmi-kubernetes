@@ -1,64 +1,64 @@
 parents:
-  - module: cluster
-    profile: aws/config
+    - module: cluster
+      profile: aws/config
 
-  - module: cluster
-    profile: aws/domain
+    - module: cluster
+      profile: aws/domain
 
-  - aws/config
+    - aws/config
 
 config:
-  kube_api_domain: "kube.@root_domain"
+    kube_api_domain: "kube.@root_domain"
 
 domain:
-  "@root_domain":
-    keep: true
+    "@root_domain":
+        keep: true
 
 firewall:
-  kube-internal:
-    network: "@aws_networks"
-    groups:
-      - weave
-      - nodeport
-      - k8s-cluster
-    rules:
-      kubelet-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kubelet_port"
-        to_port: "@kubelet_port"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      kubelet-ro-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kubelet_ro_port"
-        to_port: "@kubelet_ro_port"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      weave-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@weave_port_low"
-        to_port: "@weave_port_high"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
-      nodeport-in:
-        mode: ingress
-        protocol: tcp
-        from_port: "@kube_node_nodeport_port_low"
-        to_port: "@kube_node_nodeport_port_high"
-        cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+    kube-internal:
+        network: "@aws_networks"
+        groups:
+            - weave
+            - nodeport
+            - k8s-cluster
+        rules:
+            kubelet-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kubelet_port"
+                to_port: "@kubelet_port"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            kubelet-ro-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kubelet_ro_port"
+                to_port: "@kubelet_ro_port"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            weave-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@weave_port_low"
+                to_port: "@weave_port_high"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
+            nodeport-in:
+                mode: ingress
+                protocol: tcp
+                from_port: "@kube_node_nodeport_port_low"
+                to_port: "@kube_node_nodeport_port_high"
+                cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
 run:
-  credentials:
-    command: server rotate
+    credentials:
+        command: server rotate
 
-  kubernetes:
-    requires: credentials
-    task: cluster
-    cluster_name: "@kube_api_domain"
-    dns_domain: "@kube_api_domain"
-    admin_user: "@aws_ubuntu_user"
-    ssh_allow_users: "@aws_ubuntu_user"
-    kube_service_addresses: "@kube_service_addresses"
-    kube_pods_subnet: "@kube_pods_subnet"
-    kube_api_domain: "@kube_api_domain"
-    apiserver_loadbalancer_domain_name: "@kube_api_domain"
+    kubernetes:
+        requires: credentials
+        task: cluster
+        cluster_name: "@kube_api_domain"
+        dns_domain: "@kube_api_domain"
+        admin_user: "@aws_ubuntu_user"
+        ssh_allow_users: "@aws_ubuntu_user"
+        kube_service_addresses: "@kube_service_addresses"
+        kube_pods_subnet: "@kube_pods_subnet"
+        kube_api_domain: "@kube_api_domain"
+        apiserver_loadbalancer_domain_name: "@kube_api_domain"
