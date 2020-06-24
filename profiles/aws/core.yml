@@ -10,16 +10,6 @@ parents:
 config:
   kube_api_domain: "kube.@root_domain"
 
-group:
-  etcd:
-  weave:
-  nodeport:
-  kube-master:
-  kube-node:
-  k8s-cluster:
-    - kube-master
-    - kube-node
-
 domain:
   "@root_domain":
     keep: true
