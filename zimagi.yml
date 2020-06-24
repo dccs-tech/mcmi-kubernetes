@@ -3,9 +3,6 @@ name: kubernetes
 scripts: scripts/install.sh
 requirements: ansible/kubespray/requirements.txt
 
-roles:
-  kubernetes-admin: Kubernetes administrator (full privileges over Kubernetes cluster)
-
 modules:
   - remote: https://github.com/dccs-tech/zimagi-cluster.git
     reference: master

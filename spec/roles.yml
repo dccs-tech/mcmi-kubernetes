@@ -1,0 +1,2 @@
+roles:
+    kubernetes-admin: Kubernetes administrator (full privileges over Kubernetes cluster)
