@@ -1,5 +1,6 @@
 command_base:
     kubernetes:
+        mixins: [ kube_exec ]
         server_enabled: true
         groups_allowed: [ kubernetes-admin ]
         parse_passthrough: true
