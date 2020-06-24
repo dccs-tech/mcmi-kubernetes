@@ -1,0 +1,3 @@
+command_mixins:
+    kube_exec:
+        class: KubeExecMixin
