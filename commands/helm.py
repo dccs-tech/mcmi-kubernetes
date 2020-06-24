@@ -1,20 +1,10 @@
-from systems.command.types import module
+from systems.commands.index import Command
 from utility.filesystem import filesystem_dir
 
 import os
 
 
-class Command(
-    module.ModuleActionCommand
-):
-    def get_priority(self):
-        return -80
-
-    def groups_allowed(self):
-        return 'kubernetes-admin'
-
-    def parse_passthrough(self):
-        return True
+class Helm(Command('helm')):
 
     def exec(self):
         config_path = os.path.join(self.manager.data_dir, '.kube')

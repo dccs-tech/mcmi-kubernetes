@@ -1,20 +1,10 @@
-from systems.command.types import module
+from systems.commands.index import Command
 from utility.temp import temp_dir
 
 import os
 
 
-class Command(
-    module.ModuleActionCommand
-):
-    def get_priority(self):
-        return -80
-
-    def groups_allowed(self):
-        return 'kubernetes-admin'
-
-    def parse_passthrough(self):
-        return True
+class Kubectl(Command('kubectl')):
 
     def exec(self):
         with temp_dir() as temp:
