@@ -1,0 +1,8 @@
+command:
+    kubectl:
+        base: kubernetes
+        priority: 70
+
+    helm:
+        base: kubernetes
+        priority: 75

@@ -1,0 +1,5 @@
+command_base:
+    kubernetes:
+        server_enabled: true
+        groups_allowed: [ kubernetes-admin ]
+        parse_passthrough: true
