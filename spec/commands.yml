@@ -1,8 +1,8 @@
 command:
     kubectl:
         base: kubernetes
-        priority: 70
+        priority: 110
 
     helm:
         base: kubernetes
-        priority: 75
+        priority: 115
