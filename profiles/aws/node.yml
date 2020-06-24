@@ -1,6 +1,9 @@
 parents:
   - aws/core
 
+config:
+  node_ssh_firewall: "?> @kube_node_subnet_public_ip ? 'ssh-external' | 'ssh-internal'"
+
 subnet:
   kube-node-1:
     when_in: "@aws_kube_node_subnets"
@@ -8,7 +11,7 @@ subnet:
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: a
     use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: nat-a
+    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-a' | None"
     groups: kube-node
 
   kube-node-2:
@@ -17,7 +20,7 @@ subnet:
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: b
     use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: nat-b
+    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-b' | None"
     groups: kube-node
 
   kube-node-3:
@@ -26,7 +29,7 @@ subnet:
     cidr_prefix: "@kube_node_subnet_cidr_prefix"
     zone_suffix: c
     use_public_ip: "@kube_node_subnet_public_ip"
-    nat_subnet: nat-c
+    nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-c' | None"
     groups: kube-node
 
 server:
@@ -50,5 +53,5 @@ server:
     groups: kube-node
     firewalls:
       - internet
-      - ssh-external
+      - "@node_ssh_firewall"
       - kube-internal
