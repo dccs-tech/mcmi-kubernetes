@@ -1,5 +1,5 @@
 
-local_home_dir: /var/local/mcmi
+local_home_dir: /var/local/zimagi
 
 kube_config_dir: /etc/kubernetes
 local_kubectl_dir: "{{ local_home_dir }}/.kube"
