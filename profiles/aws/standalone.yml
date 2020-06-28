@@ -1,0 +1,21 @@
+parents:
+    - aws/config
+
+profile:
+    kubernetes-network:
+        module: cluster
+        profile: aws/network
+        operations: run
+
+    kubernetes-nat:
+        requires: kubernetes-network
+        when_not: "@kube_subnet_public_ip"
+        module: cluster
+        profile: aws/nat
+        operations: run
+
+    kubernetes-cluster:
+        requires:
+            - kubernetes-network
+            - kubernetes-nat
+        profile: aws/cluster
