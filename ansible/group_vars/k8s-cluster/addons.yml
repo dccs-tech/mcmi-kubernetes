@@ -1,7 +1,8 @@
 dashboard_enabled: true
 
 helm_enabled: true
-helm_version: "v3.1.2"
+helm_version: "v2.16.9"
+tiller_enable_tls: true
 
 registry_enabled: true
 registry_namespace: kube-system
