@@ -117,8 +117,7 @@ server:
         ebs_optimized: "@aws_kube_master_ebs_optimized"
         ebs_encrypted: "@aws_kube_master_ebs_encrypted"
         load_balancer: kube
-        load_balancer_listeners:
-            - tcp
+        load_balancer_listeners: tcp
         groups:
             - etcd
             - kube-master
