@@ -50,6 +50,7 @@ firewall:
 run:
     credentials:
         command: server rotate
+        server_search: groups.name.in=kube-master,kube-node
 
     kubernetes:
         requires: credentials
