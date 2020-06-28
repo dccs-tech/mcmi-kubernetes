@@ -16,7 +16,7 @@ class KubeExecMixin(CommandMixin('kube_exec')):
         else:
             command = [ executable ] + args
 
-        config_path = os.path.join(self.manager.data_dir, '.kube')
+        config_path = os.path.join(self.manager.data_dir, '.kube', 'config')
         command_env = {
             "KUBECONFIG": filesystem.link(config_path, '.kube')
         }
