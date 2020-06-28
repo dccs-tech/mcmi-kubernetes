@@ -1,4 +1,2 @@
-etcd_metrics: basic
 etcd_memory_limit: "512M"
-etcd_quota_backend_bytes: "2G"
 etcd_deployment_type: docker
