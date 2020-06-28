@@ -48,12 +48,18 @@ firewall:
                 cidrs: "&subnet:@aws_kube_master_subnets,@aws_kube_node_subnets:cidr"
 
 run:
-    credentials:
+    kubernetes-credentials:
         command: server rotate
         server_search: groups.name.in=kube-master,kube-node
 
+    kubernetes-user-environment:
+        requires: kubernetes-credentials
+        module: cluster
+        task: user-environment
+        servers: groups.name.in=kube-master,kube-node
+
     kubernetes:
-        requires: credentials
+        requires: kubernetes-user-environment
         task: cluster
         cluster_name: "@kube_api_domain"
         dns_domain: "@kube_api_domain"
