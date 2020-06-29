@@ -1,5 +1,6 @@
 from systems.commands.index import CommandMixin
 from utility.data import ensure_list
+from utility.filesystem import load_yaml, save_file, save_yaml
 
 import os
 
@@ -17,6 +18,8 @@ class KubeExecMixin(CommandMixin('kube_exec')):
             command = [ executable ] + args
 
         config_path = os.path.join(self.manager.data_dir, '.kube', 'config')
+        self.edit_config(config_path)
+
         command_env = {
             "KUBECONFIG": filesystem.link(config_path, '.kube')
         }
@@ -31,3 +34,14 @@ class KubeExecMixin(CommandMixin('kube_exec')):
         )
         if not success:
             self.error("Command {} failed: {}".format(executable, " ".join(command)))
+
+
+    def edit_config(self, config_path):
+        edit_file = os.path.join(self.manager.data_dir, '.kube', '.edit')
+        if not os.path.exists(edit_file):
+            config = load_yaml(config_path)
+            for cluster_info in config['clusters']:
+                cluster_info['cluster']['insecure-skip-tls-verify'] = True
+
+            save_yaml(config_path, config)
+            save_file(edit_file, '')
