@@ -27,6 +27,9 @@ config:
     kube_node_nodeport_port_low: 30000
     kube_node_nodeport_port_high: 32767
 
+    # Docker Registry lib directory
+    registry_lib_dir: /var/local/docker-registry
+
 group:
     etcd:
     weave:
