@@ -4,3 +4,4 @@ command_base:
         server_enabled: true
         groups_allowed: [kubernetes-admin]
         parse_passthrough: true
+        display_header: false
