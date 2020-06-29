@@ -14,13 +14,6 @@
       backrefs: yes
   run_once: yes
 
-- name: Update Kubernetes API Certificate Authority
-  lineinfile:
-      dest: "/tmp/kube-config"
-      regexp: "^    certificate-authority-data: .+$"
-      state: absent
-  run_once: yes
-
 - name: Copy Kubernetes client configuration to Ansible host
   fetch:
       src: "/tmp/kube-config"
