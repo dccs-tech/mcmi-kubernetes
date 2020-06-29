@@ -32,6 +32,28 @@ subnet:
         nat_subnet: "?> not @kube_node_subnet_public_ip ? 'nat-c' | None"
         groups: kube-node
 
+storage:
+    registry-node-lib:
+        provider: efs
+        network: "@aws_networks"
+        performance_mode: "@aws_storage_performance_mode"
+        throughput_mode: "@aws_storage_throughput_mode"
+        provisioned_throughput: "@aws_storage_provisioned_throughput"
+        encrypted: "@aws_storage_encrypted"
+        groups:
+            - k8s-cluster
+            - kube-node
+
+mount:
+    registry-node-lib:
+        storage: registry-node-lib
+        network: "@aws_networks"
+        subnet: "@aws_kube_node_subnets"
+        firewalls: "@storage_firewalls"
+        groups:
+            - k8s-cluster
+            - kube-node
+
 server:
     kube-node:
         count: 1
@@ -51,6 +73,12 @@ server:
         ebs_optimized: "@aws_kube_node_ebs_optimized"
         ebs_encrypted: "@aws_kube_node_ebs_encrypted"
         groups: kube-node
+        volumes:
+            "@registry_lib_dir":
+                type: nfs4
+                location: "&{storage_mount(network=<network>;subnet=<subnet>):registry-node-lib:remote_host}:/"
+                options: "@aws_efs_volume_options"
+                mode: "0770"
         firewalls:
             - internet
             - "@node_ssh_firewall"

@@ -81,6 +81,28 @@ firewall:
                 to_port: "@etcd_port_high"
                 cidrs: "&subnet:@aws_kube_master_subnets:cidr"
 
+storage:
+    registry-master-lib:
+        provider: efs
+        network: "@aws_networks"
+        performance_mode: "@aws_storage_performance_mode"
+        throughput_mode: "@aws_storage_throughput_mode"
+        provisioned_throughput: "@aws_storage_provisioned_throughput"
+        encrypted: "@aws_storage_encrypted"
+        groups:
+            - k8s-cluster
+            - kube-master
+
+mount:
+    registry-master-lib:
+        storage: registry-master-lib
+        network: "@aws_networks"
+        subnet: "@aws_kube_master_subnets"
+        firewalls: "@storage_firewalls"
+        groups:
+            - k8s-cluster
+            - kube-master
+
 load_balancer:
     kube:
         provider: aws_network
@@ -121,6 +143,12 @@ server:
         groups:
             - etcd
             - kube-master
+        volumes:
+            "@registry_lib_dir":
+                type: nfs4
+                location: "&{storage_mount(network=<network>;subnet=<subnet>):registry-master-lib:remote_host}:/"
+                options: "@aws_efs_volume_options"
+                mode: "0770"
         firewalls:
             - internet
             - "@master_ssh_firewall"
