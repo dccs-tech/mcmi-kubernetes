@@ -81,7 +81,7 @@ server:
                 mode: "0770"
             "@rook_lib_dir":
                 provider: aws_ebs
-                type: unformatted
+                type: ext4
                 location: "@aws_ceph_device"
                 ebs_type: "@aws_ceph_ebs_type"
                 ebs_size: "@aws_ceph_ebs_size"
