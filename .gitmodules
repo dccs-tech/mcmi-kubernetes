@@ -3,4 +3,4 @@
 	url = https://github.com/dccs-tech/kubespray.git
 [submodule "rook"]
 	path = rook
-	url = https://github.com/rook/rook.git
+	url = https://github.com/dccs-tech/rook.git
