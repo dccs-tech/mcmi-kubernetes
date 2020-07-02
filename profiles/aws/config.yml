@@ -36,3 +36,9 @@ config:
     aws_kube_node_ebs_iops: null
     aws_kube_node_ebs_optimized: false
     aws_kube_node_ebs_encrypted: false
+
+    aws_ceph_ebs_type: gp2
+    aws_ceph_ebs_size: 20
+    aws_ceph_ebs_iops: null
+    aws_ceph_ebs_encrypted: false
+    aws_ceph_device: /dev/xvdb
