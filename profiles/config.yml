@@ -31,7 +31,7 @@ config:
     registry_lib_dir: /var/local/docker-registry
 
     # Ceph directory
-    rook_lib_dir: /var/lib/rook
+    ceph_data_dir: /mnt/ceph
 
 group:
     etcd:

@@ -79,7 +79,7 @@ server:
                 location: "&{storage_mount(network=<network>;subnet=<subnet>):registry-node-lib:remote_host}:/"
                 options: "@aws_efs_volume_options"
                 mode: "0770"
-            "@rook_lib_dir":
+            "@ceph_data_dir":
                 provider: aws_ebs
                 type: ext4
                 location: "@aws_ceph_device"
