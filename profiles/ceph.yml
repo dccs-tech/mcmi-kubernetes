@@ -1,0 +1,28 @@
+run:
+    kubernetes-rook-common:
+        command: kubectl
+        args:
+            - apply
+            - "-f"
+            - kubernetes/rook/cluster/examples/kubernetes/ceph/common.yaml
+
+    kubernetes-rook-operator:
+        command: kubectl
+        args:
+            - apply
+            - "-f"
+            - kubernetes/rook/cluster/examples/kubernetes/ceph/operator.yaml
+
+    kubernetes-rook-cluster:
+        command: kubectl
+        args:
+            - apply
+            - "-f"
+            - kubernetes/manifests/rook-cluster.yml
+
+    kubernetes-rook-storage-class: # Creates storage class: rook-ceph-block
+        command: kubectl
+        args:
+            - apply
+            - "-f"
+            - kubernetes/rook/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
