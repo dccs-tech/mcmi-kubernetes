@@ -7,6 +7,7 @@ run:
             - kubernetes/rook/cluster/examples/kubernetes/ceph/common.yaml
 
     kubernetes-rook-operator:
+        requires: kubernetes-rook-common
         command: kubectl
         args:
             - apply
@@ -14,6 +15,7 @@ run:
             - kubernetes/rook/cluster/examples/kubernetes/ceph/operator.yaml
 
     kubernetes-rook-cluster:
+        requires: kubernetes-rook-operator
         command: kubectl
         args:
             - apply
@@ -21,6 +23,7 @@ run:
             - kubernetes/manifests/rook-cluster.yml
 
     kubernetes-rook-storage-class: # Creates storage class: rook-ceph-block
+        requires: kubernetes-rook-cluster
         command: kubectl
         args:
             - apply
