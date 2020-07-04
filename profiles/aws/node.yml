@@ -79,10 +79,9 @@ server:
                 location: "&{storage_mount(network=<network>;subnet=<subnet>):registry-node-lib:remote_host}:/"
                 options: "@aws_efs_volume_options"
                 mode: "0770"
-            "@ceph_data_dir":
+            "@aws_ceph_device":
                 provider: aws_ebs
-                type: ext4
-                location: "@aws_ceph_device"
+                type: device
                 ebs_type: "@aws_ceph_ebs_type"
                 ebs_size: "@aws_ceph_ebs_size"
                 ebs_iops: "@aws_ceph_ebs_iops"

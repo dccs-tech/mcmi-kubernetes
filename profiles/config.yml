@@ -30,9 +30,6 @@ config:
     # Docker Registry lib directory
     registry_lib_dir: /var/local/docker-registry
 
-    # Ceph directory
-    ceph_data_dir: /mnt/ceph
-
 group:
     etcd:
     weave:
