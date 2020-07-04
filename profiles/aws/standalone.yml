@@ -19,7 +19,3 @@ profile:
             - kubernetes-network
             - kubernetes-nat
         profile: aws/cluster
-
-    kubernetes-ceph:
-        requires: kubernetes-cluster
-        profile: ceph
