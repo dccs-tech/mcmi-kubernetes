@@ -1,3 +1,10 @@
 parents:
-    - aws/node
-    - aws/master
+    - aws/config
+
+profile:
+    kubernetes-platform:
+        profile: aws/kubernetes
+
+    kubernetes-ceph:
+        requires: kubernetes-platform
+        profile: ceph
