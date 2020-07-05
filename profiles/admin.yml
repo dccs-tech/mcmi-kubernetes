@@ -1,0 +1,7 @@
+run:
+    kubernetes-admin-user:
+        command: kubectl
+        args:
+            - apply
+            - "-f"
+            - kubernetes/manifests/admin-user.yml

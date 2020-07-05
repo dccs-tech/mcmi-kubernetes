@@ -8,3 +8,7 @@ profile:
     kubernetes-ceph:
         requires: kubernetes-platform
         profile: ceph
+
+    kubernetes-admin:
+        requires: kubernetes-platform
+        profile: admin
