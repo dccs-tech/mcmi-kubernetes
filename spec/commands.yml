@@ -6,3 +6,7 @@ command:
     helm:
         base: kubernetes
         priority: 115
+
+    istioctl:
+        base: kubernetes
+        priority: 120
