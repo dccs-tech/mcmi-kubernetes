@@ -12,3 +12,9 @@ profile:
     kubernetes-admin:
         requires: kubernetes-platform
         profile: admin
+
+    kubernetes-istio:
+        requires:
+            - kubernetes-ceph
+            - kubernetes-admin
+        profile: istio

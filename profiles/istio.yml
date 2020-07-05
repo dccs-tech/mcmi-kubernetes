@@ -1,0 +1,6 @@
+run:
+    kubernetes-istio:
+        command: istioctl
+        args:
+            - install
+            - "-y"
