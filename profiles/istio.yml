@@ -4,3 +4,12 @@ run:
         args:
             - install
             - "-y"
+
+    kubernetes-injection:
+        requires: kubernetes-istio
+        command: kubectl
+        args:
+            - label
+            - namespace
+            - default
+            - "istio-injection=enabled"
