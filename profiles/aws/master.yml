@@ -81,6 +81,34 @@ firewall:
                 to_port: "@etcd_port_high"
                 cidrs: "&subnet:@aws_kube_master_subnets:cidr"
 
+server:
+    kube-master:
+        count: 1
+        provider: ec2
+        network: "@aws_networks"
+        subnet: "@aws_kube_master_subnets"
+        image: "@aws_ubuntu_image[<network>]"
+        ssh_port: "@ssh_port"
+        user: "@aws_ubuntu_user"
+        machine: "@aws_kube_master_machine"
+        tenancy: "@aws_kube_master_tenancy"
+        monitoring: "@aws_kube_master_monitoring"
+        ebs_type: "@aws_kube_master_ebs_type"
+        ebs_size: "@aws_kube_master_ebs_size"
+        ebs_iops: "@aws_kube_master_ebs_iops"
+        ebs_iops: "@aws_kube_master_ebs_iops"
+        ebs_optimized: "@aws_kube_master_ebs_optimized"
+        ebs_encrypted: "@aws_kube_master_ebs_encrypted"
+        groups:
+            - etcd
+            - kube-master
+        firewalls:
+            - internet
+            - "@master_ssh_firewall"
+            - kube-internal
+            - kube-master-external
+            - kube-master-internal
+
 load_balancer:
     kube:
         provider: aws_network
@@ -97,33 +125,4 @@ load_balancer:
                 health_check_interval: "@aws_load_balancer_health_check_interval"
                 healthy_threshold: "@aws_load_balancer_healthy_threshold"
                 unhealthy_threshold: "@aws_load_balancer_unhealthy_threshold"
-
-server:
-    kube-master:
-        count: 1
-        provider: ec2_lb
-        network: "@aws_networks"
-        subnet: "@aws_kube_master_subnets"
-        image: "@aws_ubuntu_image[<network>]"
-        ssh_port: "@ssh_port"
-        user: "@aws_ubuntu_user"
-        machine: "@aws_kube_master_machine"
-        tenancy: "@aws_kube_master_tenancy"
-        monitoring: "@aws_kube_master_monitoring"
-        ebs_type: "@aws_kube_master_ebs_type"
-        ebs_size: "@aws_kube_master_ebs_size"
-        ebs_iops: "@aws_kube_master_ebs_iops"
-        ebs_iops: "@aws_kube_master_ebs_iops"
-        ebs_optimized: "@aws_kube_master_ebs_optimized"
-        ebs_encrypted: "@aws_kube_master_ebs_encrypted"
-        load_balancer: kube
-        load_balancer_listeners: tcp
-        groups:
-            - etcd
-            - kube-master
-        firewalls:
-            - internet
-            - "@master_ssh_firewall"
-            - kube-internal
-            - kube-master-external
-            - kube-master-internal
+                server_groups: kube-master
