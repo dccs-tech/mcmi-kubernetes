@@ -1,9 +1,9 @@
 parents:
-    - module: cluster
-      profile: aws/config
+    - module: aws
+      profile: config
 
-    - module: cluster
-      profile: aws/domain
+    - module: aws
+      profile: domain
 
     - aws/config
 
