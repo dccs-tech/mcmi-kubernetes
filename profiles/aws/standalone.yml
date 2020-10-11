@@ -3,15 +3,15 @@ parents:
 
 profile:
     kubernetes-network:
-        module: cluster
-        profile: aws/network
+        module: aws
+        profile: network
         operations: run
 
     kubernetes-nat:
         requires: kubernetes-network
         when_not: "@kube_subnet_public_ip"
-        module: cluster
-        profile: aws/nat
+        module: aws
+        profile: nat
         operations: run
 
     kubernetes-cluster:
